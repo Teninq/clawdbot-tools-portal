@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipi · 智能应用中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); min-height: 100vh; font-family: sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .card-hover:hover { transform: translateY(-5px); transition: all 0.3s ease; box-shadow: 0 0 30px rgba(59, 130, 246, 0.3); }
+    </style>
+</head>
+<body class="p-8 text-white">
+    <div class="max-w-6xl mx-auto">
+        <header class="mb-16 py-8"><h1 class="text-4xl font-black text-blue-500 tracking-tighter">PIPI DASHBOARD</h1></header>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <a href="/rag/index.html" class="glass card-hover p-8 rounded-[32px] block">
+                <h3 class="text-xl font-bold mb-2 text-white">📚 RAG 可视化手册</h3>
+                <p class="text-slate-400 text-sm mb-4">解析检索增强生成的四步流程。</p>
+                <div class="text-blue-400 font-bold">立即进入 →</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,76 +1,66 @@
-<!doctype html>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Clawdbot Canvas</title>
-<style>
-  html, body { height: 100%; margin: 0; background: #000; color: #fff; font: 16px/1.4 -apple-system, BlinkMacSystemFont, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
-  .wrap { min-height: 100%; display: grid; place-items: center; padding: 24px; }
-  .card { width: min(720px, 100%); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); border-radius: 16px; padding: 18px 18px 14px; }
-  .title { display: flex; align-items: baseline; gap: 10px; }
-  h1 { margin: 0; font-size: 22px; letter-spacing: 0.2px; }
-  .sub { opacity: 0.75; font-size: 13px; }
-  .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
-  button { appearance: none; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.10); color: #fff; padding: 10px 12px; border-radius: 12px; font-weight: 600; cursor: pointer; }
-  button:active { transform: translateY(1px); }
-  .ok { color: #24e08a; }
-  .bad { color: #ff5c5c; }
-  .log { margin-top: 14px; opacity: 0.85; font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; white-space: pre-wrap; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.08); padding: 10px; border-radius: 12px; }
-</style>
-<div class="wrap">
-  <div class="card">
-    <div class="title">
-      <h1>Clawdbot Canvas</h1>
-      <div class="sub">Interactive test page (auto-reload enabled)</div>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipi · 智能应用中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); min-height: 100vh; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .card-hover:hover { transform: scale(1.02); transition: all 0.3s ease; box-shadow: 0 0 30px rgba(59, 130, 246, 0.4); }
+        .pipi-glow { text-shadow: 0 0 10px rgba(59, 130, 246, 0.8); }
+    </style>
+</head>
+<body class="p-6 text-white text-opacity-90">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-16 py-8">
+            <div>
+                <h1 class="text-4xl font-black pipi-glow tracking-tighter">PIPI DASHBOARD</h1>
+                <p class="text-blue-400 text-sm font-mono mt-1">Status: Fully Operational | Nodes: Active</p>
+            </div>
+            <div class="glass px-6 py-2 rounded-full text-xs font-bold border border-blue-500/30">
+                Logged in: OWNER
+            </div>
+        </header>
+
+        <!-- Tool Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- App 1: RAG Principles -->
+            <a href="/rag" class="glass card-hover p-8 rounded-[32px] block relative overflow-hidden group">
+                <div class="absolute -right-4 -bottom-4 text-8xl opacity-10 group-hover:opacity-20 transition-opacity">📚</div>
+                <h3 class="text-xl font-bold mb-2">RAG 可视化手册</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">解析检索增强生成的四步流程，基于巴黎奥运实战案例。</p>
+                <div class="inline-flex items-center text-blue-400 text-xs font-bold">
+                    LAUNCH TOOL <span class="ml-2">→</span>
+                </div>
+            </a>
+
+            <!-- App 2: Claude Code Terminal (Placeholder) -->
+            <div class="glass card-hover p-8 rounded-[32px] relative overflow-hidden opacity-60">
+                <div class="absolute -right-4 -bottom-4 text-8xl opacity-10">🤖</div>
+                <h3 class="text-xl font-bold mb-2">Claude Code 协作仓</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">正在与 Pipi 进行后台深度逻辑优化，暂未开放 Web 实时显示。</p>
+                <div class="inline-flex items-center text-slate-500 text-xs font-bold">
+                    SYSTEM SYNCING...
+                </div>
+            </div>
+
+            <!-- App 3: Add New Skill -->
+            <div class="glass card-hover p-8 rounded-[32px] border-dashed border-2 border-white/20 flex flex-col items-center justify-center text-center cursor-pointer">
+                <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-4 text-2xl">+</div>
+                <h3 class="font-bold">加载新技能</h3>
+                <p class="text-slate-500 text-xs mt-2">从 chenkai-skills 搬运更多卡片</p>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-24 text-center border-t border-white/5 pt-12">
+            <p class="text-slate-500 text-xs tracking-widest uppercase">Powered by Pipi & Claude Code · 2026.02.01</p>
+        </footer>
     </div>
-
-    <div class="row">
-      <button id="btn-hello">Hello</button>
-      <button id="btn-time">Time</button>
-      <button id="btn-photo">Photo</button>
-      <button id="btn-dalek">Dalek</button>
-    </div>
-
-    <div id="status" class="sub" style="margin-top: 10px;"></div>
-    <div id="log" class="log">Ready.</div>
-  </div>
-</div>
-<script>
-(() => {
-  const logEl = document.getElementById("log");
-  const statusEl = document.getElementById("status");
-  const log = (msg) => { logEl.textContent = String(msg); };
-
-  const hasIOS = () => !!(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.clawdbotCanvasA2UIAction);
-  const hasAndroid = () => !!(window.clawdbotCanvasA2UIAction && typeof window.clawdbotCanvasA2UIAction.postMessage === "function");
-  const hasHelper = () => typeof window.clawdbotSendUserAction === "function";
-  statusEl.innerHTML =
-    "Bridge: " +
-    (hasHelper() ? "<span class='ok'>ready</span>" : "<span class='bad'>missing</span>") +
-    " · iOS=" + (hasIOS() ? "yes" : "no") +
-    " · Android=" + (hasAndroid() ? "yes" : "no");
-
-  window.addEventListener("clawdbot:a2ui-action-status", (ev) => {
-    const d = ev && ev.detail || {};
-    log("Action status: id=" + (d.id || "?") + " ok=" + String(!!d.ok) + (d.error ? (" error=" + d.error) : ""));
-  });
-
-  function send(name, sourceComponentId) {
-    if (!hasHelper()) {
-      log("No action bridge found. Ensure you're viewing this on an iOS/Android Clawdbot node canvas.");
-      return;
-    }
-    const ok = window.clawdbotSendUserAction({
-      name,
-      surfaceId: "main",
-      sourceComponentId,
-      context: { t: Date.now() },
-    });
-    log(ok ? ("Sent action: " + name) : ("Failed to send action: " + name));
-  }
-
-  document.getElementById("btn-hello").onclick = () => send("hello", "demo.hello");
-  document.getElementById("btn-time").onclick = () => send("time", "demo.time");
-  document.getElementById("btn-photo").onclick = () => send("photo", "demo.photo");
-  document.getElementById("btn-dalek").onclick = () => send("dalek", "demo.dalek");
-})();
-</script>
+</body>
+</html>
