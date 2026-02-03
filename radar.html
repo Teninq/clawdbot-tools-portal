@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipi · 项目雷达</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0f172a; color: #f8fafc; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .radar-pulse { border: 2px solid #3b82f6; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(3); } }
+    </style>
+</head>
+<body class="p-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="flex items-center justify-between mb-12">
+            <div>
+                <h1 class="text-3xl font-black tracking-tighter text-blue-400">PROJECT RADAR</h1>
+                <p class="text-xs font-mono text-slate-500 uppercase tracking-widest mt-1">Multi-Project Realtime Monitoring</p>
+            </div>
+            <a href="pipi.html" class="text-xs text-slate-400 hover:text-white border border-white/20 px-4 py-2 rounded-full transition-all">← BACK HOME</a>
+        </div>
+
+        <div id="project-list" class="space-y-6">
+            <!-- Projects will inject here -->
+            <div class="animate-pulse flex items-center justify-center p-20 text-slate-600">
+                SCALING INFRASTRUCTURE...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadRadar() {
+            try {
+                const response = await fetch('data/projects_status.json');
+                const projects = await response.json();
+                const container = document.getElementById('project-list');
+                container.innerHTML = '';
+
+                projects.forEach(p => {
+                    const statusColor = p.status === 'Synced' ? 'text-green-400' : 'text-yellow-400';
+                    const pulseColor = p.status === 'Synced' ? 'bg-green-500' : 'bg-yellow-500';
+                    
+                    const card = `
+                        <div class="glass p-6 rounded-3xl relative overflow-hidden group hover:border-blue-500/50 transition-all">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-xl font-bold">${p.name}</h3>
+                                    <code class="text-[10px] text-slate-500">${p.path}</code>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="relative flex h-3 w-3">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full ${pulseColor} opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-3 w-3 ${pulseColor}"></span>
+                                    </span>
+                                    <span class="${statusColor} text-xs font-bold uppercase tracking-widest">${p.status}</span>
+                                </div>
+                            </div>
+                            <div class="bg-black/30 p-4 rounded-xl font-mono text-xs text-slate-400 border border-white/5">
+                                > ${p.last_commit || 'No commits found'}
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += card;
+                });
+            } catch (err) {
+                document.getElementById('project-list').innerHTML = `<p class="text-red-500">Error loading radar: ${err.message}</p>`;
+            }
+        }
+        loadRadar();
+        setInterval(loadRadar, 60000); // 1-minute auto-refresh
+    </script>
+</body>
+</html>
